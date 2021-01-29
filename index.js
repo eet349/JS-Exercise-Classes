@@ -171,16 +171,17 @@ class Student extends Lambdasian {
 		previousBackground,
 		className,
 		favSubjects,
+		grade, // added for the stretch goal
 	}) {
 		super({ name, age, location });
 		this.previousBackground = previousBackground;
 		this.className = className;
 		this.favSubjects = favSubjects;
+		this.grade = grade ? grade : undefined; // Added for the stretch goal. MVP tests should still pass.
 	}
 	listSubjects() {
 		const stringOfFavSubjects = this.favSubjects.reduce((accStr, subj) => {
 			return accStr + `, ${subj}`;
-			// return accStr + ', ' + subj;
 		}, '');
 		return `Loving ${stringOfFavSubjects}!`;
 	}
@@ -235,6 +236,60 @@ class ProjectManager extends Instructor {
         + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
         + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
   */
+
+Student.prototype.graduate = function () {
+	if (this.grade) {
+		return this.grade > 70
+			? `Congratulations ${this.name}, you graduated!` // I considered assigning this.grade to undefined they the student stops getting graded
+			: `Keep studying ${this.name}! You got this!💪`;
+	}
+};
+
+Instructor.prototype.gradeStudent = function (student) {
+	const randomGradeMod = Math.floor(Math.random() * 10);
+	const rand100 = Math.floor(Math.random() * 100);
+	const addOrSub = rand100 >= 50;
+	if (student.grade) {
+		student.grade = addOrSub
+			? student.grade + randomGradeMod
+			: student.grade - randomGradeMod;
+	}
+};
+
+// const testStudent = new Student({
+// 	name: 'test',
+// 	age: 29,
+// 	location: 'McAllen',
+// 	previousBackground: 'Retail',
+// 	className: 'WEB40',
+// 	favSubjects: ['React', 'JS'],
+// 	grade: 70,
+// });
+
+// const testInstructor = new Instructor({
+// 	name: 'test ins',
+// 	age: 35,
+// 	location: 'USA',
+// 	specialty: 'JS',
+// 	favLanguage: 'JS',
+// 	catchPhrase: 'Does that make sense?',
+// });
+
+// console.log('grade: ', testStudent.grade);
+// testInstructor.gradeStudent(testStudent);
+// console.log('grade: ', testStudent.grade);
+// console.log(testStudent.graduate());
+// testInstructor.gradeStudent(testStudent);
+// console.log('grade: ', testStudent.grade);
+// console.log(testStudent.graduate());
+// testInstructor.gradeStudent(testStudent);
+// console.log('grade: ', testStudent.grade);
+// console.log(testStudent.graduate());
+// testInstructor.gradeStudent(testStudent);
+// console.log('grade: ', testStudent.grade);
+// testInstructor.gradeStudent(testStudent);
+// console.log('grade: ', testStudent.grade);
+// console.log(testStudent.graduate());
 
 //End of Challenge
 /* 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 */
